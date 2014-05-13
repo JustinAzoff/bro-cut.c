@@ -71,6 +71,18 @@ int find_output_indexes(int **output_indexes, int num_columns, char *columns[], 
         }
         *output_indexes = out_indexes;
         return num_columns;
+    } else {
+        out_indexes=(int *) malloc((num_fields-num_columns)*sizeof(int));
+        int idx = 0;
+        int out_idx = 0;
+        while((field = strsep(&fields, "\t")) != NULL) {
+            if(!contains_string(columns, num_columns, field)) {
+                out_indexes[out_idx++] = idx;
+            }
+            idx++;
+        }
+        *output_indexes = out_indexes;
+        return num_fields-num_columns;
     }
 
     return 0;
