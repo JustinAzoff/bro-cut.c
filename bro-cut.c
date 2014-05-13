@@ -14,26 +14,20 @@ int contains_string(char *haystack[], int haystack_size, char *needle) {
     return 0;
 }
 
-void output_indexes(char *line, int *indexes, int num_indexes) {
+void output_indexes(char *line, int *indexes, int num_indexes, char *ofs) {
     int cur_field = 0;
     char * field;
+    char *_ofs = "\0";
 
-    field = strsep(&line, "\t");
-    while (cur_field != indexes[0]) {
-        field = strsep(&line, "\t");
-        ++cur_field;
-    }
-    printf("%s", field);
-    ++cur_field;
-
-    for(int i=1; i < num_indexes; ++i) {
+    for(int i=0; i < num_indexes; ++i) {
         field = strsep(&line, "\t");
         while (cur_field != indexes[i]) {
             field = strsep(&line, "\t");
             ++cur_field;
         }
-        printf("\t%s", field);
+        printf("%s%s", _ofs, field);
         ++cur_field;
+        _ofs = ofs;
     }
     printf("\n");
 }
@@ -103,7 +97,7 @@ int bro_cut(int num_columns, char *columns[], int negate) {
             continue;
         }
 
-        output_indexes(line, out_indexes, num_out_indexes);
+        output_indexes(line, out_indexes, num_out_indexes, "\t");
     }
     return 0;
 }
