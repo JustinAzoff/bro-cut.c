@@ -82,7 +82,7 @@ int find_output_indexes(int **output_indexes, int num_columns, char *columns[], 
     return 0;
 }
 
-int bro_cut(int num_columns, char *columns[], int negate) {
+int bro_cut(int num_columns, char *columns[], int negate, char *ofs) {
     char line[MAX_LINE];
 
     int *out_indexes;
@@ -97,7 +97,7 @@ int bro_cut(int num_columns, char *columns[], int negate) {
             continue;
         }
 
-        output_indexes(line, out_indexes, num_out_indexes, "\t");
+        output_indexes(line, out_indexes, num_out_indexes, ofs);
     }
     return 0;
 }
@@ -105,12 +105,16 @@ int bro_cut(int num_columns, char *columns[], int negate) {
 int main(int argc, char *argv[]) {
     int negate = 0;
     int c;
-    while((c = getopt(argc, argv, "n")) != -1){
+    char *ofs = "\t";
+    while((c = getopt(argc, argv, "nF:")) != -1){
         switch(c){
             case 'n':
                 negate = 1;
                 break;
+            case 'F':
+                ofs = optarg;
+                break;
         }
     }
-    return bro_cut(argc-optind, &argv[optind], negate);
+    return bro_cut(argc-optind, &argv[optind], negate, ofs);
 }
