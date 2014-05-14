@@ -24,23 +24,24 @@ int max_index(int *indexes, int num_indexes) {
     return ret;
 }
 
+const char *tmp_fields[MAX_LINE];
+
 void output_indexes(char *line, int *indexes, int num_indexes, char *ofs) {
     int cur_field = 0;
     char * field;
     char *_ofs = "\0";
 
     int highest_index = max_index(indexes, num_indexes) +1;
-    char **fields=(char **) malloc(highest_index*sizeof(char *));
 
     for(int i=0; i < highest_index; ++i) {
         field = strsep(&line, "\t");
-        fields[i] = field;
+        tmp_fields[i] = field;
     }
     for(int i=0; i < num_indexes ; ++i) {
         if(indexes[i] == -1) {
             printf("%s", _ofs);
         } else {
-            printf("%s%s", _ofs, fields[indexes[i]]);
+            printf("%s%s", _ofs, tmp_fields[indexes[i]]);
         }
         ++cur_field;
         _ofs = ofs;
