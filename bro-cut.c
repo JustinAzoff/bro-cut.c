@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#define MAX_LINE 4096
+#define MAX_LINE 16384
 
 int string_index(char *haystack[], int haystack_size, char *needle) {
     for(int i=0; i < haystack_size ; ++i) {
