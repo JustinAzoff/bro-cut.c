@@ -29,10 +29,10 @@ void output_indexes(char *line, int *indexes, int num_indexes, char *ofs) {
     char * field;
     char *_ofs = "\0";
 
-    int highest_index = max_index(indexes, num_indexes);
+    int highest_index = max_index(indexes, num_indexes) +1;
     char **fields=(char **) malloc(highest_index*sizeof(char *));
 
-    for(int i=0; i <= highest_index; ++i) {
+    for(int i=0; i < highest_index; ++i) {
         field = strsep(&line, "\t");
         fields[i] = field;
     }
@@ -97,7 +97,6 @@ int find_output_indexes(int **output_indexes, int num_columns, char *columns[], 
             if(string_index(columns, num_columns, fields[idx]) == -1) {
                 out_indexes[out_idx++] = idx;
             }
-            idx++;
         }
         *output_indexes = out_indexes;
         return num_fields-num_columns;
