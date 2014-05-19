@@ -6,7 +6,8 @@
 #define MAX_LINE 16384
 
 int string_index(char *haystack[], int haystack_size, char *needle) {
-    for(int i=0; i < haystack_size ; ++i) {
+    int i;
+    for(i=0; i < haystack_size ; ++i) {
         if(strcmp(haystack[i], needle) == 0) {
             return i;
         }
@@ -15,8 +16,9 @@ int string_index(char *haystack[], int haystack_size, char *needle) {
 }
 
 int max_index(int *indexes, int num_indexes) {
+    int i;
     int ret = 0;
-    for(int i=0; i < num_indexes; ++i) {
+    for(i=0; i < num_indexes; ++i) {
         if(indexes[i] > ret) {
             ret = indexes[i];
         }
@@ -27,17 +29,18 @@ int max_index(int *indexes, int num_indexes) {
 const char *tmp_fields[MAX_LINE];
 
 void output_indexes(char *line, int *indexes, int num_indexes, char *ofs) {
+    int i;
     int cur_field = 0;
     char * field;
     char *_ofs = "\0";
 
     int highest_index = max_index(indexes, num_indexes) +1;
 
-    for(int i=0; i < highest_index; ++i) {
+    for(i=0; i < highest_index; ++i) {
         field = strsep(&line, "\t");
         tmp_fields[i] = field;
     }
-    for(int i=0; i < num_indexes ; ++i) {
+    for(i=0; i < num_indexes ; ++i) {
         if(indexes[i] == -1) {
             printf("%s", _ofs);
         } else {
@@ -50,6 +53,7 @@ void output_indexes(char *line, int *indexes, int num_indexes, char *ofs) {
 }
 
 int find_output_indexes(int **output_indexes, int num_columns, char *columns[], int negate, char *line) {
+    int i;
     int *out_indexes;
 
     int num_fields = 0;
@@ -69,7 +73,7 @@ int find_output_indexes(int **output_indexes, int num_columns, char *columns[], 
     /* All the columns */
     if(num_columns == 0){
         out_indexes=(int *) malloc(num_fields*sizeof(int));
-        for(int i=0; i < num_fields ; ++i) {
+        for(i=0; i < num_fields ; ++i) {
             out_indexes[i] = i;
         }
         *output_indexes = out_indexes;
